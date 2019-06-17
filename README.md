@@ -1,3 +1,6 @@
+All credits to https://github.com/scottlawsonbc/audio-reactive-led-strip , I found raspberry pi installation process to be a bit cumbersome, as well as while debugging, found codes of ESP8266 and blinkstick, which were not useful. 
+So just removed those codes, added small modifications.
+
 # Audio Reactive LED Strip
 Real-time LED strip music visualization using Python and the  Raspberry Pi.
 
@@ -50,9 +53,18 @@ pip install rpi_ws281x
 ## Audio device configuration
 For the Raspberry Pi, a USB audio device needs to be configured as the default audio device.
 
-Create/edit `/etc/asound.conf`
+Connect USB audio input device.
+
+Check if it has been detected by raspbian using
+
 ```
-sudo nano .asoundrc
+arecord -l
+```
+You might want to increase gain by using ```alsamixer``` in terminal.
+
+Create/edit `~/.asoundrc`
+```
+sudo nano ~/.asoundrc
 ```
 Set the file to the following text
 ```
@@ -72,21 +84,34 @@ pcm.!default {
 
 
 ## Test the LED strip
-1. cd rpi_ws281x/python/examples
-2. sudo nano strandtest.py
-3. Configure the options at the top of the file. Enable logic inverting if you are using an inverting logic-level converter. Set the correct GPIO pin and number of pixels for the LED strip. You will likely need a logic-level converter to convert the Raspberry Pi's 3.3V logic to the 5V logic used by the ws2812b LED strip.
-4. Run example with 'sudo python strandtest.py'
+Get the file: https://github.com/pimoroni/rpi_ws281x-python/blob/master/examples/strandtest.py
+Run it using 
+```
+sudo python strandtest.py
+```
+
+## Get visualization code
+
+Now we need to clone this repo
+
+```
+git clone https://github.com/singhkpratham/pi-audio-reactive-led-strip.git
+cd pi-audio-reactive-led-strip
+```
 
 ## Configure the visualization code
-In `config.py`, set the device to `'pi'` and configure the GPIO, LED and other hardware settings.
+In `config.py`, configure the GPIO, LED and other hardware settings.
 If you are using an inverting logic level converter, set `LED_INVERT = True` in `config.py`. Set `LED_INVERT = False` if you are not using an inverting logic level converter (i.e. connecting LED strip directly to GPIO pin).
 
-# Audio Input
-The visualization program streams audio from the default audio input device.
+Test once:
+```
+sudo python led.py
+```
 
-Examples of typical audio sources:
-* Audio cable connected to the audio input jack (requires USB sound card on Raspberry Pi)
-* Webcam microphone, headset, studio recording microphone, etc
+## Run visualization
+```
+sudo python visualization.py scroll/spectrum/energy
+```
 
 # Running the Visualization
 Once everything has been configured, run [visualization.py](python/visualization.py) to start the visualization. The visualization will automatically use your default recording device (microphone) as the audio input.
