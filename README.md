@@ -11,14 +11,14 @@ The repository includes everything needed to build an LED strip music visualizer
   - Recording audio with a microphone ([microphone.py](python/microphone.py))
   - Digital signal processing ([dsp.py](python/dsp.py))
   - Constructing 1D visualizations ([visualization.py](python/visualization.py))
-  - Sending pixel information to the ESP8266 over WiFi ([led.py](python/led.py))
+  - Sending colors to LED strip ([led.py](python/led.py))
   - Configuration and settings ([config.py](python/config.py))
 
 
 # What do I need to make one?
 
 ## Standalone Raspberry Pi
-You can also build a standalone visualizer using a Raspberry Pi. For this you will need: 
+Hardware needed:
 - Raspberry Pi (1, 2, or 3)
 - USB audio input device. This could be a USB microphone or a sound card. You just need to find some way of giving the Raspberry Pi audio input.
 - WS2812B LED strip (such as Adafruit Neopixels)
